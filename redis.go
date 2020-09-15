@@ -51,7 +51,7 @@ func (hs hooks) process(
 	if len(hs.hooks) == 0 {
 		return hs.withContext(ctx, func() error {
 			err := fn(ctx, cmd)
-			if err != nil {
+			if err != nil && cmd.Err() == nil {
 				cmd.SetErr(err)
 			}
 			return err
@@ -71,7 +71,7 @@ func (hs hooks) process(
 	if retErr == nil {
 		retErr = hs.withContext(ctx, func() error {
 			err := fn(ctx, cmd)
-			if err != nil {
+			if err != nil && cmd.Err() == nil {
 				cmd.SetErr(err)
 			}
 			return err
